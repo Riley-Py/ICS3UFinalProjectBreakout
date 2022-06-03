@@ -27,16 +27,18 @@ namespace ICS3UFinalProjectBreakout
 
         SolidBrush whiteBrush = new SolidBrush(Color.White);
 
-        Rectangle[] blocks = new Rectangle[5];
-        int index = 5;
+        Rectangle[] storage = new Rectangle[30];
 
-        List<Rectangle> storage = new List<Rectangle>();
+        List<Rectangle> blocks = new List<Rectangle>();
+        
 
         int x1 = 100;
-        int increment = 10;
+        int incrementx = 50;
+        int incrementy = 25;
         int y1 = 20;
         int width = 30;
         int height = 5;
+        int index = 0;
 
         
 
@@ -80,35 +82,61 @@ namespace ICS3UFinalProjectBreakout
         {
             e.Graphics.FillRectangle(whiteBrush, borderLeft);
             e.Graphics.FillRectangle(whiteBrush, borderRight);
-
             for (int i = 0; i < index; i++)
             {
-                e.Graphics.FillRectangle(whiteBrush, blocks[i]);
-              
-                
+                e.Graphics.FillRectangle(whiteBrush, storage[i]);
+                index++;
             }
+
+           
+
+           
 
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             blockCreation();
+
+            Refresh();
         }
 
         public void blockCreation()
         {
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < blocks.Count(); i++)
             {
-                int x = x1 + increment;
-                int y = y1 + increment;
-                blocks[i] = new Rectangle(100, 200, width, height);
-                increment += 10;
-               
-
-              
-
+                blocks.Add(new Rectangle(x1, y1, width, height));
+                x1 += incrementx;
                 
+
+                if (blocks.Count() % 3 == 0)
+                {
+                    y1 += incrementy;
+
+                }
+                if (blocks.Count() == 30)
+                {
+                    blocks.CopyTo(storage);
+                    
+                }
+
             }
+          
+            
+
+            
+
+
+
+
+            
+           
+                
+               
+            
+           
+            
+            
 
             
         }

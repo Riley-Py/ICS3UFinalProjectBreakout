@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace ICS3UFinalProjectBreakout
 {
@@ -16,6 +13,8 @@ namespace ICS3UFinalProjectBreakout
         {
             InitializeComponent();
             this.BackColor = Color.FromArgb(26, 26, 26);
+            time.Start();
+           
             
         }
 
@@ -27,23 +26,27 @@ namespace ICS3UFinalProjectBreakout
 
         SolidBrush whiteBrush = new SolidBrush(Color.White);
 
-        Rectangle[] storage = new Rectangle[30];
-
-        List<Rectangle> blocks = new List<Rectangle>();
         
 
-        int x1 = 100;
-        int incrementx = 50;
+        List<Rectangle> blocks = new List<Rectangle>();
+        List<Rectangle> firstRow = new List<Rectangle>();
+        
+
+        int x1 = 130;
+        int incrementx = 55;
         int incrementy = 25;
         int y1 = 20;
         int width = 30;
-        int height = 5;
-        int index = 0;
+        int height = 10;
 
+        Stopwatch time = new Stopwatch();
         
 
 
-        
+
+
+
+
 
 
 
@@ -82,10 +85,14 @@ namespace ICS3UFinalProjectBreakout
         {
             e.Graphics.FillRectangle(whiteBrush, borderLeft);
             e.Graphics.FillRectangle(whiteBrush, borderRight);
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < blocks.Count(); i++)
             {
-                e.Graphics.FillRectangle(whiteBrush, storage[i]);
-                index++;
+                e.Graphics.FillRectangle(whiteBrush, blocks[i]);
+               
+            }
+            for (int i = 0; i < firstRow.Count(); i++)
+            {
+                e.Graphics.FillRectangle(whiteBrush, firstRow[i]);
             }
 
            
@@ -96,31 +103,62 @@ namespace ICS3UFinalProjectBreakout
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+           
+
             blockCreation();
+            
+
 
             Refresh();
         }
 
         public void blockCreation()
         {
-            for (int i = 0; i < blocks.Count(); i++)
+            
+
+
+
+            while (blocks.Count() != 32)
             {
+               
+
                 blocks.Add(new Rectangle(x1, y1, width, height));
                 x1 += incrementx;
-                
 
-                if (blocks.Count() % 3 == 0)
+                if (blocks.Count() % 4 == 0)
                 {
+                    x1 = 130;
                     y1 += incrementy;
 
                 }
-                if (blocks.Count() == 30)
+            }
+
+
+            TimeSpan spanOfTime = time.Elapsed;
+
+
+            if ((spanOfTime.TotalSeconds + 4) % 10 <= 1)
+            {
+                for (int i = 0; i < blocks.Count(); i++)
                 {
-                    blocks.CopyTo(storage);
+                    blocks[i] = new Rectangle(blocks[i].X, blocks[i].Y + 2, width, height);
+                    
                     
                 }
+                for (int i = 0; i < 4; i++)
+                {
+                    y1 = 20;
+                    firstRow.Add(new Rectangle(blocks[i].X,y1, width, height));
+                    y1 += incrementy;
+                    
 
+                    
+                }
+              
             }
+            
+
+            
           
             
 

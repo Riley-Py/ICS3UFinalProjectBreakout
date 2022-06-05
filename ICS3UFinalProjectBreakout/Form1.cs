@@ -28,16 +28,17 @@ namespace ICS3UFinalProjectBreakout
 
         
 
-        List<Rectangle> blocks = new List<Rectangle>();
-        List<Rectangle> firstRow = new List<Rectangle>();
+        List<Rectangle> initialBlocks = new List<Rectangle>();
+        List<Rectangle> newBlocks = new List<Rectangle>();
         
 
         int x1 = 130;
         int incrementx = 55;
         int incrementy = 25;
-        int y1 = 20;
+        int y1 = 0;
         int width = 30;
         int height = 10;
+        int index = 1;
 
         Stopwatch time = new Stopwatch();
         
@@ -85,19 +86,16 @@ namespace ICS3UFinalProjectBreakout
         {
             e.Graphics.FillRectangle(whiteBrush, borderLeft);
             e.Graphics.FillRectangle(whiteBrush, borderRight);
-            for (int i = 0; i < blocks.Count(); i++)
+            for (int i = 0; i < initialBlocks.Count(); i++)
             {
-                e.Graphics.FillRectangle(whiteBrush, blocks[i]);
-               
+                e.Graphics.FillRectangle(whiteBrush, initialBlocks[i]);
+                       
             }
-            for (int i = 0; i < firstRow.Count(); i++)
-            {
-                e.Graphics.FillRectangle(whiteBrush, firstRow[i]);
-            }
+            
 
-           
 
-           
+
+
 
         }
 
@@ -117,21 +115,46 @@ namespace ICS3UFinalProjectBreakout
             
 
 
-
-            while (blocks.Count() != 32)
+            //Initial generation of all of the blocks
+            while (initialBlocks.Count() < 40)
             {
-               
-
-                blocks.Add(new Rectangle(x1, y1, width, height));
+                initialBlocks.Add(new Rectangle(x1, y1, width, height));
                 x1 += incrementx;
 
-                if (blocks.Count() % 4 == 0)
+                if (initialBlocks.Count() % 4 == 0)
                 {
                     x1 = 130;
                     y1 += incrementy;
 
                 }
+                if (initialBlocks.Count() >= 40)
+                {
+                    y1 = 0;
+                    x1 = 130;
+
+                    break;
+                }
             }
+            if ((initialBlocks.All(ele => ele.Y != y1)))
+            {
+                for (int i = 0; i < initialBlocks.Count(); i++)
+                {
+
+
+                    initialBlocks.Add(new Rectangle(x1, initialBlocks[i].Y - incrementy, width, height)); ;
+                    x1 += incrementx;
+                    y1 = 0;
+
+
+
+                }
+                x1 = 130;
+                
+
+
+
+            }
+
 
 
             TimeSpan spanOfTime = time.Elapsed;
@@ -139,44 +162,37 @@ namespace ICS3UFinalProjectBreakout
 
             if ((spanOfTime.TotalSeconds + 4) % 10 <= 1)
             {
-                for (int i = 0; i < blocks.Count(); i++)
+                for (int i = 0; i < initialBlocks.Count(); i++)
                 {
-                    blocks[i] = new Rectangle(blocks[i].X, blocks[i].Y + 2, width, height);
-                    
-                    
-                }
-                for (int i = 0; i < 4; i++)
-                {
-                    y1 = 20;
-                    firstRow.Add(new Rectangle(blocks[i].X,y1, width, height));
-                    y1 += incrementy;
+                    initialBlocks[i] = new Rectangle(initialBlocks[i].X, initialBlocks[i].Y + 2, width, height);
                     
 
-                    
+
                 }
-              
+               
             }
             
 
-            
-          
-            
-
-            
 
 
 
 
-            
-           
-                
-               
-            
-           
-            
-            
 
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
     }
 }

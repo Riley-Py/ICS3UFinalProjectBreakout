@@ -38,7 +38,7 @@ namespace ICS3UFinalProjectBreakout
         int y1 = 0;
         int width = 30;
         int height = 10;
-        int index = 1;
+        int index = 4;
 
         Stopwatch time = new Stopwatch();
         
@@ -112,7 +112,8 @@ namespace ICS3UFinalProjectBreakout
 
         public void blockCreation()
         {
-            
+          
+
 
 
             //Initial generation of all of the blocks
@@ -135,29 +136,12 @@ namespace ICS3UFinalProjectBreakout
                     break;
                 }
             }
-            if ((initialBlocks.All(ele => ele.Y != y1)))
-            {
-                for (int i = 0; i < initialBlocks.Count(); i++)
-                {
-
-
-                    initialBlocks.Add(new Rectangle(x1, initialBlocks[i].Y - incrementy, width, height)); ;
-                    x1 += incrementx;
-                    y1 = 0;
 
 
 
-                }
-                x1 = 130;
-                
-
-
-
-            }
-
-
-
+            
             TimeSpan spanOfTime = time.Elapsed;
+            
 
 
             if ((spanOfTime.TotalSeconds + 4) % 10 <= 1)
@@ -166,12 +150,41 @@ namespace ICS3UFinalProjectBreakout
                 {
                     initialBlocks[i] = new Rectangle(initialBlocks[i].X, initialBlocks[i].Y + 2, width, height);
                     
+                    
 
 
                 }
-               
+                
+
+
+
+
+            }
+            else if ((initialBlocks.All(ele => ele.Y != y1)))
+            {
+
+
+
+                for (int i = 0; i < index; i++)
+                {
+
+
+                    initialBlocks.Insert(i, new Rectangle(x1, initialBlocks[i].Y - incrementy, width, height)); ;
+                    x1 += incrementx;
+                    
+
+                }
+                x1 = 130;
+                y1 = initialBlocks.Last().Y;
+
+
+
+
             }
             
+           
+
+
 
 
 

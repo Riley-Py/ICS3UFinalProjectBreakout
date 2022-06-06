@@ -43,14 +43,15 @@ namespace ICS3UFinalProjectBreakout
 
         int x1 = 130;
         int incrementx = 50;
-        int incrementy = 25;
+        int incrementy = 20;
         int y1 = 0;
         int width = 40;
         int height = 10;
         int playerSpeed = 8;
         int ballXSpeed = 4;
         int ballYSpeed = 4;
-        int space = 10;
+        int score1 = 0;
+        
         
 
         Stopwatch time = new Stopwatch();
@@ -112,6 +113,28 @@ namespace ICS3UFinalProjectBreakout
                        
             }
         }
+        private void Breakout_Load(object sender, EventArgs e)
+        {
+            Label score = new Label();
+            score.Text = "Score:\n 0";
+            score.Location = new Point(375, 70);
+            score.Font = new Font("Consolas", 12);
+            score.ForeColor = Color.White;
+            score.AutoSize = true;
+            score.Visible = true;
+            score.TextAlign = ContentAlignment.MiddleCenter;
+            this.Controls.Add(score);
+
+            Label timeLabel = new Label();
+            timeLabel.Text = $"Time:\n 00:00";
+            timeLabel.Location = new Point(375, 150);
+            timeLabel.Font = new Font("Consolas", 12);
+            timeLabel.ForeColor = Color.White;
+            timeLabel.AutoSize = true;  
+            timeLabel.Visible = true;
+            timeLabel.TextAlign = ContentAlignment.MiddleCenter;
+            this.Controls.Add(timeLabel);
+        }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -121,6 +144,7 @@ namespace ICS3UFinalProjectBreakout
             blockCreation();
             player1Movement();
             ballPlayerCollision();
+            seeTime();
             Refresh();
         }
 
@@ -228,6 +252,8 @@ namespace ICS3UFinalProjectBreakout
                 {
                     initialBlocks.RemoveAt(i);
                     ballYSpeed *= -1;
+                    scoring();
+                    
                 }
                 else
                 {
@@ -237,16 +263,16 @@ namespace ICS3UFinalProjectBreakout
             
 
         }
-
-        private void Breakout_Load(object sender, EventArgs e)
+        public void scoring()
         {
-            Label score = new Label();
-            score.Text = "Score:\n0";
-            score.Location = new Point(450, 500);
-            score.Font = new Font("Consolas", 12);
-            score.ForeColor = Color.White;
-            score.Visible = true;
-            this.Controls.Add(score);
+            score1 += 5;
+            this.Controls[0].Text = $"Score:\n {score1}";
         }
+        public void seeTime()
+        {
+            TimeSpan currentTime = time.Elapsed;
+            this.Controls[1].Text = $"Time: \n{currentTime.Minutes}:{currentTime.Seconds}";
+        }
+
     }
 }

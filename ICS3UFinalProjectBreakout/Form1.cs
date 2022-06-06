@@ -43,7 +43,7 @@ namespace ICS3UFinalProjectBreakout
 
         int x1 = 130;
         int incrementx = 50;
-        int incrementy = 20;
+        int incrementy = 15;
         int y1 = 0;
         int width = 40;
         int height = 10;
@@ -115,6 +115,7 @@ namespace ICS3UFinalProjectBreakout
         }
         private void Breakout_Load(object sender, EventArgs e)
         {
+            //Note: make everything invisible once done with the lives
             Label score = new Label();
             score.Text = "Score:\n 0";
             score.Location = new Point(375, 70);
@@ -134,6 +135,11 @@ namespace ICS3UFinalProjectBreakout
             timeLabel.Visible = true;
             timeLabel.TextAlign = ContentAlignment.MiddleCenter;
             this.Controls.Add(timeLabel);
+
+            PictureBox life1 = new PictureBox();
+            
+
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -271,7 +277,16 @@ namespace ICS3UFinalProjectBreakout
         public void seeTime()
         {
             TimeSpan currentTime = time.Elapsed;
-            this.Controls[1].Text = $"Time: \n{currentTime.Minutes}:{currentTime.Seconds}";
+            if (currentTime.Seconds >= 10)
+            {
+                this.Controls[1].Text = $"Time: \n{currentTime.Minutes}:{currentTime.Seconds}";
+
+            }
+            else if (currentTime.Seconds < 10)
+            {
+                this.Controls[1].Text = $"Time: \n{currentTime.Minutes}:0{currentTime.Seconds}";
+            }
+            
         }
 
     }

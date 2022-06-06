@@ -35,6 +35,7 @@
             // timer1
             // 
             this.timer1.Enabled = true;
+            this.timer1.Interval = 60;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Breakout
@@ -47,6 +48,7 @@
             this.Name = "Breakout";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Breakout";
+            this.Load += new System.EventHandler(this.Breakout_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Breakout_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Breakout_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Breakout_KeyUp);

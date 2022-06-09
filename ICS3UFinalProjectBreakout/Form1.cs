@@ -55,7 +55,8 @@ namespace ICS3UFinalProjectBreakout
         
 
         Stopwatch time = new Stopwatch();
-        
+
+        Bitmap hearts = new Bitmap(Properties.Resources.hearts3, 50, 50);
 
 
 
@@ -137,6 +138,13 @@ namespace ICS3UFinalProjectBreakout
             this.Controls.Add(timeLabel);
 
             PictureBox life1 = new PictureBox();
+            life1.Image = hearts;
+            life1.Location = new Point(375, 200);
+            life1.Visible = true;
+            life1.SizeMode = PictureBoxSizeMode.AutoSize;
+            this.Controls.Add(life1);
+
+            
             
 
 
@@ -151,6 +159,7 @@ namespace ICS3UFinalProjectBreakout
             player1Movement();
             ballPlayerCollision();
             seeTime();
+            //lives();
             Refresh();
         }
 
@@ -289,5 +298,5 @@ namespace ICS3UFinalProjectBreakout
             
         }
 
-    }
+    }   
 }

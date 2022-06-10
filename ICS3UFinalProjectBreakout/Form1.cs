@@ -207,6 +207,7 @@ namespace ICS3UFinalProjectBreakout
             leaderboard.ForeColor = Color.White;
             leaderboard.Font = new Font("Consolas", 14, FontStyle.Bold);
             leaderboard.AutoSize = true;
+            leaderboard.Click += leaderboard_Click;
             this.Controls.Add(leaderboard);
 
             Button continueButton = new Button();
@@ -383,6 +384,11 @@ namespace ICS3UFinalProjectBreakout
             {
                 timer1.Stop();
             }
+        }
+
+        private void leaderboard_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Works!");
         }
 
     }   

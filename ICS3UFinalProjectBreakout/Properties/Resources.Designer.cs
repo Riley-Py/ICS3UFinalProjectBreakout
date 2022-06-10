@@ -63,9 +63,19 @@ namespace ICS3UFinalProjectBreakout.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hearts3 {
+        internal static System.Drawing.Bitmap breakout_title {
             get {
-                object obj = ResourceManager.GetObject("hearts3", resourceCulture);
+                object obj = ResourceManager.GetObject("breakout_title", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Heart {
+            get {
+                object obj = ResourceManager.GetObject("Heart", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -15,7 +15,7 @@ namespace ICS3UFinalProjectBreakout
             this.BackColor = Color.FromArgb(26, 26, 26);
 
             //*Temporary time placement* Insert in gameinit function
-            time.Start();
+            //time.Start();
            
             
         }
@@ -51,12 +51,15 @@ namespace ICS3UFinalProjectBreakout
         int ballXSpeed = 4;
         int ballYSpeed = 4;
         int score1 = 0;
+        int tracker = 3;
+        string gameState = "Start";
         
         
 
         Stopwatch time = new Stopwatch();
 
-        Bitmap hearts = new Bitmap(Properties.Resources.hearts3, 50, 50);
+        Bitmap hearts = new Bitmap(Properties.Resources.Heart, 30, 30);
+        Bitmap breakoutTitle0 = new Bitmap(Properties.Resources.breakout_title, 130, 130);
 
 
 
@@ -99,19 +102,29 @@ namespace ICS3UFinalProjectBreakout
 
         private void Breakout_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(whiteBrush, borderLeft);
-            e.Graphics.FillRectangle(whiteBrush, borderRight);
+            //e.Graphics.FillRectangle(whiteBrush, borderLeft);
+            //e.Graphics.FillRectangle(whiteBrush, borderRight);
 
-            e.Graphics.FillRectangle(whiteBrush, player1);
-            e.Graphics.FillRectangle(whiteBrush, leftPlayer1);
-            e.Graphics.FillRectangle(whiteBrush, rightPlayer1);
+            //e.Graphics.FillRectangle(whiteBrush, player1);
+            //e.Graphics.FillRectangle(whiteBrush, leftPlayer1);
+            //e.Graphics.FillRectangle(whiteBrush, rightPlayer1);
 
-            e.Graphics.FillEllipse(whiteBrush, ball);
+            //e.Graphics.FillEllipse(whiteBrush, ball);
 
             for (int i = 0; i < initialBlocks.Count(); i++)
             {
                 e.Graphics.FillRectangle(whiteBrush, initialBlocks[i]);
                        
+            }
+            if (gameState == "Start")
+            {
+                this.Width = 500;
+                this.Height = 325;
+                this.Controls[3].Visible = true;
+                this.Controls[7].Visible = true;
+                this.Controls[8].Visible = true;
+                this.Controls[9].Visible = true;
+
             }
         }
         private void Breakout_Load(object sender, EventArgs e)
@@ -123,7 +136,7 @@ namespace ICS3UFinalProjectBreakout
             score.Font = new Font("Consolas", 12);
             score.ForeColor = Color.White;
             score.AutoSize = true;
-            score.Visible = true;
+            score.Visible = false;
             score.TextAlign = ContentAlignment.MiddleCenter;
             this.Controls.Add(score);
 
@@ -133,19 +146,81 @@ namespace ICS3UFinalProjectBreakout
             timeLabel.Font = new Font("Consolas", 12);
             timeLabel.ForeColor = Color.White;
             timeLabel.AutoSize = true;  
-            timeLabel.Visible = true;
+            timeLabel.Visible = false;
             timeLabel.TextAlign = ContentAlignment.MiddleCenter;
             this.Controls.Add(timeLabel);
 
+            Label lives = new Label();
+            lives.Text = "Lives:";
+            lives.Location = new Point(380, 220);
+            lives.Font = new Font("Consolas", 12);
+            lives.ForeColor = Color.White;
+            lives.AutoSize = true;
+            lives.Visible = false;
+            lives.TextAlign = ContentAlignment.MiddleCenter;
+            this.Controls.Add(lives);
+
+            Label title = new Label();
+            title.Text = "BREAKOUT!!!";
+            title.Location = new Point(165, 40);
+            title.ForeColor = Color.White;
+            title.Font = new Font("Consolas", 20, FontStyle.Bold);
+            title.Visible = false;
+            title.AutoSize = true;
+            title.TextAlign = ContentAlignment.MiddleCenter;
+            this.Controls.Add(title);
+            
+
             PictureBox life1 = new PictureBox();
             life1.Image = hearts;
-            life1.Location = new Point(375, 200);
-            life1.Visible = true;
+            life1.Location = new Point(390, 250);
+            life1.Visible = false;
             life1.SizeMode = PictureBoxSizeMode.AutoSize;
             this.Controls.Add(life1);
 
-            
-            
+            PictureBox life2 = new PictureBox();
+            life2.Image = hearts;
+            life2.Location = new Point(390, 295);
+            life2.Visible = false;
+            life2.SizeMode = PictureBoxSizeMode.AutoSize;
+            this.Controls.Add(life2);
+
+            PictureBox life3 = new PictureBox();
+            life3.Image = hearts;
+            life3.Location = new Point(390, 335);
+            life3.Visible = false;
+            life3.SizeMode = PictureBoxSizeMode.AutoSize;
+            this.Controls.Add(life3);
+
+            PictureBox breakoutTitle = new PictureBox();
+            breakoutTitle.Image = breakoutTitle0;
+            breakoutTitle.Location = new Point(190, 100);
+            breakoutTitle.Visible = false;
+            breakoutTitle.SizeMode = PictureBoxSizeMode.AutoSize;
+            this.Controls.Add(breakoutTitle);
+
+            Button leaderboard = new Button();
+            leaderboard.BackColor = this.BackColor;
+            leaderboard.Location = new Point(90, 250);
+            leaderboard.Visible = false;
+            leaderboard.Text = "Leaderboard";
+            leaderboard.ForeColor = Color.White;
+            leaderboard.Font = new Font("Consolas", 14, FontStyle.Bold);
+            leaderboard.AutoSize = true;
+            this.Controls.Add(leaderboard);
+
+            Button continueButton = new Button();
+            continueButton.BackColor = this.BackColor;
+            continueButton.Location = new Point(240, 250);
+            continueButton.Visible = false;
+            continueButton.Text = "Continue";
+            continueButton.ForeColor = Color.White;
+            continueButton.Font = new Font("Consolas", 14, FontStyle.Bold);
+            continueButton.AutoSize = true;
+            this.Controls.Add(continueButton);
+
+
+
 
 
         }
@@ -159,7 +234,6 @@ namespace ICS3UFinalProjectBreakout
             player1Movement();
             ballPlayerCollision();
             seeTime();
-            //lives();
             Refresh();
         }
 
@@ -249,6 +323,7 @@ namespace ICS3UFinalProjectBreakout
             {
                 ball.X = 230;
                 ball.Y = 300;
+                lives();
             }
             else if (ball.IntersectsWith(leftPlayer1))
             {
@@ -296,6 +371,18 @@ namespace ICS3UFinalProjectBreakout
                 this.Controls[1].Text = $"Time: \n{currentTime.Minutes}:0{currentTime.Seconds}";
             }
             
+        }
+
+        public void lives()
+        {
+            
+           this.Controls[tracker].Visible = false;
+           tracker++;
+            
+            if (tracker == 6)
+            {
+                timer1.Stop();
+            }
         }
 
     }   

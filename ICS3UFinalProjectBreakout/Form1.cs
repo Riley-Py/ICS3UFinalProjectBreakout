@@ -126,6 +126,17 @@ namespace ICS3UFinalProjectBreakout
                 this.Controls[9].Visible = true;
 
             }
+            if (gameState == "Difficulty")
+            {
+                this.Controls[3].Visible = false;
+                this.Controls[7].Visible = false;
+                this.Controls[8].Visible = false;
+                this.Controls[9].Visible = false;
+
+                this.Controls[10].Visible = true;
+                this.Controls[11].Visible = true;
+                this.Controls[12].Visible = true;
+            }
         }
         private void Breakout_Load(object sender, EventArgs e)
         {
@@ -216,10 +227,40 @@ namespace ICS3UFinalProjectBreakout
             continueButton.Visible = false;
             continueButton.Text = "Continue";
             continueButton.ForeColor = Color.White;
+            continueButton.Click += continuebutton_Click;
             continueButton.Font = new Font("Consolas", 14, FontStyle.Bold);
             continueButton.AutoSize = true;
             this.Controls.Add(continueButton);
 
+            Button easyButton = new Button();
+            easyButton.BackColor = Color.Green;
+            easyButton.Location = new Point(175, 100);
+            easyButton.Visible = false;
+            easyButton.Text = "Easy";
+            easyButton.ForeColor = Color.LightGreen;
+            easyButton.Font = new Font("Consolas", 16, FontStyle.Bold);
+            easyButton.AutoSize = true;
+            this.Controls.Add(easyButton);
+
+            Button mediumButton = new Button();
+            mediumButton.BackColor = Color.Yellow;
+            mediumButton.Location = new Point(175, 130);
+            mediumButton.Visible = false;
+            mediumButton.Text = "Medium";
+            mediumButton.ForeColor = Color.LightYellow;
+            mediumButton.Font = new Font("Consolas", 16, FontStyle.Bold);
+            mediumButton.AutoSize = true;
+            this.Controls.Add(mediumButton);
+
+            Button hardButton = new Button();
+            hardButton.BackColor = Color.Red;
+            hardButton.Location = new Point(175, 160);
+            hardButton.Visible = false;
+            hardButton.Text = "Hard";
+            hardButton.ForeColor = Color.IndianRed;
+            hardButton.Font = new Font("Consolas", 16, FontStyle.Bold);
+            hardButton.AutoSize = true;
+            this.Controls.Add(hardButton);
 
 
 
@@ -389,6 +430,10 @@ namespace ICS3UFinalProjectBreakout
         private void leaderboard_Click(object sender, EventArgs e)
         {
             Console.WriteLine("Works!");
+        }
+        private void continuebutton_Click(object sender, EventArgs e)
+        {
+            gameState = "Difficulty";
         }
 
     }   

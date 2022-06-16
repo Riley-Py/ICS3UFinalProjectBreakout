@@ -14,7 +14,7 @@ namespace ICS3UFinalProjectBreakout
             InitializeComponent();
             this.BackColor = Color.FromArgb(26, 26, 26);
 
-            //*Temporary time placement* Insert in gameinit function
+            //*Temporary time placement* Insert in gameinit functions
             //time.Start();
            
             
@@ -32,15 +32,10 @@ namespace ICS3UFinalProjectBreakout
 
         Rectangle ball = new Rectangle(230, 300, 15, 15);
 
-
         SolidBrush whiteBrush = new SolidBrush(Color.White);
-
-        
 
         List<Rectangle> initialBlocks = new List<Rectangle>();
         
-        
-
         int x1 = 130;
         int incrementx = 50;
         int incrementy = 15;
@@ -48,27 +43,19 @@ namespace ICS3UFinalProjectBreakout
         int width = 40;
         int height = 10;
         int playerSpeed = 8;
-        int ballXSpeed = 4;
-        int ballYSpeed = 4;
+        int ballXSpeed; 
+        int ballYSpeed;  
         int score1 = 0;
         int tracker = 3;
+        int fallSpeed;
         string gameState = "Start";
         
         
-
         Stopwatch time = new Stopwatch();
 
         Bitmap hearts = new Bitmap(Properties.Resources.Heart, 30, 30);
         Bitmap breakoutTitle0 = new Bitmap(Properties.Resources.breakout_title, 130, 130);
-
-
-
-
-
-
-
-
-
+        Bitmap endlessPicture = new Bitmap(Properties.Resources.endless, 140, 120);
 
         private void Breakout_KeyUp(object sender, KeyEventArgs e)
         {
@@ -124,6 +111,7 @@ namespace ICS3UFinalProjectBreakout
                 this.Controls[7].Visible = true;
                 this.Controls[8].Visible = true;
                 this.Controls[9].Visible = true;
+                this.Controls[16].Visible = true;
 
             }
             if (gameState == "Difficulty")
@@ -132,10 +120,24 @@ namespace ICS3UFinalProjectBreakout
                 this.Controls[7].Visible = false;
                 this.Controls[8].Visible = false;
                 this.Controls[9].Visible = false;
+                this.Controls[16].Visible = false;
 
                 this.Controls[10].Visible = true;
                 this.Controls[11].Visible = true;
                 this.Controls[12].Visible = true;
+                this.Controls[13].Visible = true;
+            }
+            if (gameState == "Mode")
+            {
+                this.Controls[10].Visible = false;
+                this.Controls[11].Visible = false;
+                this.Controls[12].Visible = false;
+                this.Controls[13].Visible = false;
+
+                this.Controls[14].Visible = true;
+                this.Controls[15].Visible = true;
+                this.Controls[17].Visible = true;
+
             }
         }
         private void Breakout_Load(object sender, EventArgs e)
@@ -212,7 +214,7 @@ namespace ICS3UFinalProjectBreakout
 
             Button leaderboard = new Button();
             leaderboard.BackColor = this.BackColor;
-            leaderboard.Location = new Point(90, 250);
+            leaderboard.Location = new Point(60, 250);
             leaderboard.Visible = false;
             leaderboard.Text = "Leaderboard";
             leaderboard.ForeColor = Color.White;
@@ -223,7 +225,7 @@ namespace ICS3UFinalProjectBreakout
 
             Button continueButton = new Button();
             continueButton.BackColor = this.BackColor;
-            continueButton.Location = new Point(240, 250);
+            continueButton.Location = new Point(205, 250);
             continueButton.Visible = false;
             continueButton.Text = "Continue";
             continueButton.ForeColor = Color.White;
@@ -234,33 +236,87 @@ namespace ICS3UFinalProjectBreakout
 
             Button easyButton = new Button();
             easyButton.BackColor = Color.Green;
-            easyButton.Location = new Point(175, 100);
+            easyButton.Location = new Point(205, 100);
             easyButton.Visible = false;
             easyButton.Text = "Easy";
             easyButton.ForeColor = Color.LightGreen;
             easyButton.Font = new Font("Consolas", 16, FontStyle.Bold);
             easyButton.AutoSize = true;
+            easyButton.Click += easybutton_Click;
             this.Controls.Add(easyButton);
 
             Button mediumButton = new Button();
             mediumButton.BackColor = Color.Yellow;
-            mediumButton.Location = new Point(175, 130);
+            mediumButton.Location = new Point(200, 150);
             mediumButton.Visible = false;
             mediumButton.Text = "Medium";
             mediumButton.ForeColor = Color.LightYellow;
             mediumButton.Font = new Font("Consolas", 16, FontStyle.Bold);
             mediumButton.AutoSize = true;
+            mediumButton.Click += mediumbutton_Click;
             this.Controls.Add(mediumButton);
 
             Button hardButton = new Button();
             hardButton.BackColor = Color.Red;
-            hardButton.Location = new Point(175, 160);
+            hardButton.Location = new Point(205, 200);
             hardButton.Visible = false;
             hardButton.Text = "Hard";
             hardButton.ForeColor = Color.IndianRed;
             hardButton.Font = new Font("Consolas", 16, FontStyle.Bold);
             hardButton.AutoSize = true;
+            hardButton.Click += hardbutton_Click;
             this.Controls.Add(hardButton);
+
+            Label difficulty = new Label();
+            difficulty.BackColor = this.BackColor;
+            difficulty.Location = new Point(110, 30);
+            difficulty.Visible = false;
+            difficulty.Text = "Choose your difficulty level";
+            difficulty.ForeColor = Color.White;
+            difficulty.Font = new Font("Consolas", 14, FontStyle.Bold);
+            difficulty.AutoSize = true;
+            this.Controls.Add(difficulty);
+
+            Label mode = new Label();
+            mode.BackColor = this.BackColor;
+            mode.Location = new Point(150, 20);
+            mode.Visible = false;
+            mode.Text = "Choose your mode:";
+            mode.ForeColor = Color.White;
+            mode.Font = new Font("Consolas", 16, FontStyle.Bold);
+            mode.AutoSize = true;
+            this.Controls.Add(mode);
+
+            Button endLessButton = new Button();
+            endLessButton.BackColor = Color.Blue;
+            endLessButton.Location = new Point(85, 255);
+            endLessButton.Visible = false;
+            endLessButton.Text = "Endless";
+            endLessButton.ForeColor = Color.LightBlue;
+            endLessButton.Font = new Font("Consolas", 14, FontStyle.Bold);
+            endLessButton.AutoSize = true;
+            this.Controls.Add(endLessButton);
+
+            Button exit = new Button();
+            exit.BackColor = this.BackColor;
+            exit.ForeColor = Color.White;
+            exit.Location = new Point(325, 250);
+            exit.Visible = false;
+            exit.Text = "Exit";
+            exit.Font = new Font("Consolas", 14, FontStyle.Bold);
+            exit.AutoSize = true;
+            exit.Click += exit_Click;
+            this.Controls.Add(exit);
+
+            PictureBox endlessPictureBox = new PictureBox();
+            endlessPictureBox.Image = endlessPicture;
+            endlessPictureBox.Location = new Point(65, 100);
+            endlessPictureBox.Visible = false;
+            endlessPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            endlessPictureBox.BorderStyle = BorderStyle.FixedSingle;
+            this.Controls.Add(endlessPictureBox);
+
+            
 
 
 
@@ -305,7 +361,7 @@ namespace ICS3UFinalProjectBreakout
          
             TimeSpan spanOfTime = time.Elapsed;
             
-            if ((spanOfTime.TotalSeconds + 4) % 12 <= 1)
+            if ((spanOfTime.TotalSeconds + 4) % fallSpeed <= 1)
             {
                 for (int i = 0; i < initialBlocks.Count(); i++)
                 {
@@ -434,6 +490,36 @@ namespace ICS3UFinalProjectBreakout
         private void continuebutton_Click(object sender, EventArgs e)
         {
             gameState = "Difficulty";
+        }
+
+        private void easybutton_Click(object sender, EventArgs e)
+        {
+            ballXSpeed = 4;
+            ballYSpeed = 4;
+            fallSpeed = 12;
+            gameState = "Mode";
+
+        }
+        private void mediumbutton_Click(object sender, EventArgs e)
+        {
+            ballXSpeed = 6;
+            ballYSpeed = 6;
+            fallSpeed = 10;
+            gameState = "Mode";
+
+        }
+        private void hardbutton_Click(object sender, EventArgs e)
+        {
+            ballXSpeed = 8;
+            ballYSpeed = 8;
+            fallSpeed = 8;
+            gameState = "Mode";
+
+        }
+
+        private void exit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
     }   

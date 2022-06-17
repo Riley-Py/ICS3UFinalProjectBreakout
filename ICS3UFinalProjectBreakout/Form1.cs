@@ -14,8 +14,7 @@ namespace ICS3UFinalProjectBreakout
             InitializeComponent();
             this.BackColor = Color.FromArgb(26, 26, 26);
 
-            //*Temporary time placement* Insert in gameinit functions
-            //time.Start();
+            
            
             
         }
@@ -46,16 +45,21 @@ namespace ICS3UFinalProjectBreakout
         int ballXSpeed; 
         int ballYSpeed;  
         int score1 = 0;
-        int tracker = 3;
+        int tracker = 4;
         int fallSpeed;
         string gameState = "Start";
         
         
         Stopwatch time = new Stopwatch();
+        
 
         Bitmap hearts = new Bitmap(Properties.Resources.Heart, 30, 30);
         Bitmap breakoutTitle0 = new Bitmap(Properties.Resources.breakout_title, 130, 130);
         Bitmap endlessPicture = new Bitmap(Properties.Resources.endless, 140, 120);
+
+        TimeSpan overAllTime;
+
+        
 
         private void Breakout_KeyUp(object sender, KeyEventArgs e)
         {
@@ -89,20 +93,7 @@ namespace ICS3UFinalProjectBreakout
 
         private void Breakout_Paint(object sender, PaintEventArgs e)
         {
-            //e.Graphics.FillRectangle(whiteBrush, borderLeft);
-            //e.Graphics.FillRectangle(whiteBrush, borderRight);
-
-            //e.Graphics.FillRectangle(whiteBrush, player1);
-            //e.Graphics.FillRectangle(whiteBrush, leftPlayer1);
-            //e.Graphics.FillRectangle(whiteBrush, rightPlayer1);
-
-            //e.Graphics.FillEllipse(whiteBrush, ball);
-
-            for (int i = 0; i < initialBlocks.Count(); i++)
-            {
-                e.Graphics.FillRectangle(whiteBrush, initialBlocks[i]);
-                       
-            }
+            
             if (gameState == "Start")
             {
                 this.Width = 500;
@@ -138,6 +129,43 @@ namespace ICS3UFinalProjectBreakout
                 this.Controls[15].Visible = true;
                 this.Controls[17].Visible = true;
 
+            }
+            if (gameState == "Endless")
+            {
+                e.Graphics.FillRectangle(whiteBrush, borderLeft);
+                e.Graphics.FillRectangle(whiteBrush, borderRight);
+
+                e.Graphics.FillRectangle(whiteBrush, player1);
+                e.Graphics.FillRectangle(whiteBrush, leftPlayer1);
+                e.Graphics.FillRectangle(whiteBrush, rightPlayer1);
+
+                e.Graphics.FillEllipse(whiteBrush, ball);
+
+                for (int i = 0; i < initialBlocks.Count(); i++)
+                {
+                    e.Graphics.FillRectangle(whiteBrush, initialBlocks[i]);
+
+                }
+
+
+            }
+            if (gameState == "Game Over")
+            {
+                this.Width = 500;
+                this.Height = 325;
+                this.Controls[0].Visible = false;
+                this.Controls[1].Visible = false;
+                this.Controls[2].Visible = false;
+                this.Controls[4].Visible = false;
+                this.Controls[5].Visible = false;
+                this.Controls[6].Visible = false;
+
+                this.Controls[18].Visible = true;
+                this.Controls[19].Visible = true;
+                this.Controls[20].Visible = true;
+
+                this.Controls[19].Text = $"Your score is: {score1}";
+                this.Controls[20].Text = $"Time you endured: {overAllTime.Minutes}:{overAllTime.Seconds}";
             }
         }
         private void Breakout_Load(object sender, EventArgs e)
@@ -295,6 +323,7 @@ namespace ICS3UFinalProjectBreakout
             endLessButton.ForeColor = Color.LightBlue;
             endLessButton.Font = new Font("Consolas", 14, FontStyle.Bold);
             endLessButton.AutoSize = true;
+            endLessButton.Click += endlessbutton_Click;
             this.Controls.Add(endLessButton);
 
             Button exit = new Button();
@@ -316,7 +345,41 @@ namespace ICS3UFinalProjectBreakout
             endlessPictureBox.BorderStyle = BorderStyle.FixedSingle;
             this.Controls.Add(endlessPictureBox);
 
+            Label gameOverTitle = new Label();
+            gameOverTitle.Text = "GAME OVER!";
+            gameOverTitle.ForeColor = Color.White;
+            gameOverTitle.BackColor = this.BackColor;
+            gameOverTitle.Font = new Font("Consolas", 17, FontStyle.Bold);
+            gameOverTitle.Location = new Point(200, 180);
+            gameOverTitle.Visible = false;
+            gameOverTitle.AutoSize = true;
+            this.Controls.Add(gameOverTitle);
+
+            Label finalScore = new Label();
+            finalScore.Text = "";
+            finalScore.ForeColor = Color.Red;
+            finalScore.BackColor = this.BackColor;
+            finalScore.Font = new Font("Consolas", 14, FontStyle.Bold);
+            finalScore.Location = new Point(200, 230);
+            finalScore.Visible = false;
+            finalScore.AutoSize = true;
+            this.Controls.Add(finalScore);
+
             
+            Label time = new Label();
+            time.Text = "";
+            time.ForeColor = Color.Blue;
+            time.BackColor = this.BackColor;
+            time.Font = new Font("Consolas", 14, FontStyle.Bold);
+            time.Location = new Point(200, 270);
+            time.Visible = false;
+            time.AutoSize = true;
+            this.Controls.Add(time);
+
+
+
+
+
 
 
 
@@ -434,6 +497,7 @@ namespace ICS3UFinalProjectBreakout
                 ball.X = player1.X + ball.Width;
 
             }
+            
             for (int i = 0; i < initialBlocks.Count(); i++)
             {
                 if (ball.IntersectsWith(initialBlocks[i]))
@@ -477,10 +541,24 @@ namespace ICS3UFinalProjectBreakout
            this.Controls[tracker].Visible = false;
            tracker++;
             
-            if (tracker == 6)
+           
+            
+            if (tracker == 7)
             {
-                timer1.Stop();
+               
+                time.Stop();
+                overAllTime = time.Elapsed;
+                gameTimer.Stop();
+                gameState = "Game Over";
+                
+
+
+
+
             }
+            
+            
+            
         }
 
         private void leaderboard_Click(object sender, EventArgs e)
@@ -521,6 +599,39 @@ namespace ICS3UFinalProjectBreakout
         {
             this.Close();
         }
+        private void endlessbutton_Click(object sender, EventArgs e)
+        {
+            EndlessGameInit();
+        }
+        public void EndlessGameInit()
+        {
+            gameState = "Endless";
+
+            time.Start();
+            gameTimer.Enabled = true;
+            gameTimer.Start();
+
+            this.Width = 450;
+            this.Height = 400;
+
+            this.Controls[14].Visible = false;
+            this.Controls[15].Visible = false;
+            this.Controls[17].Visible = false;
+            
+
+            this.Controls[0].Visible = true;
+            this.Controls[1].Visible = true;
+            this.Controls[2].Visible = true;
+            this.Controls[4].Visible = true;
+            this.Controls[5].Visible = true;
+            this.Controls[6].Visible = true;
+            
+
+            this.Focus();
+
+
+        }
+        
 
     }   
 }

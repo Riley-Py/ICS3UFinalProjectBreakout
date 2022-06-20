@@ -910,7 +910,7 @@ namespace ICS3UFinalProjectBreakout
             string path1 = Path.Combine(projectPath, "Resources");
             string pathToFile = Path.Combine(path1, "scores.txt");
 
-            
+            //Reads from the text file and prints out the output from it
             using (StreamReader sr = new StreamReader(pathToFile))
             {
                 while (sr.Peek() != -1)
@@ -1098,12 +1098,21 @@ namespace ICS3UFinalProjectBreakout
             
             
         }
+        /// <summary>
+        /// Game Over loop
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gameOver_MediaEnded(object sender, EventArgs e)
         {
             gameOver.Stop();
             gameOver.Play();
         }
-
+        /// <summary>
+        /// Goes to the leaderboard screen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void leaderboardbutton_Click(object sender, EventArgs e)
         {
             buttonPress.Stop();
@@ -1111,15 +1120,23 @@ namespace ICS3UFinalProjectBreakout
             gameState = "Write leaderboard";
 
         }
+        /// <summary>
+        /// Writes the name to the text file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void writeLeaderboard_Click(object sender, EventArgs e)
         {
+            //Gets the player name and adds it to the dictionary
             string getPlayer = this.Controls[27].Text;
             playerScores.Add(getPlayer, score1);
 
+            //Gets the directory path for the text file
             var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string path1 = Path.Combine(projectPath, "Resources");
             string pathToFile = Path.Combine(path1, "scores.txt");
 
+            //Opens the streamwriter to write from the dictionary to the text file
             using (StreamWriter sw = new StreamWriter(pathToFile, append:true))
             {
                 foreach (KeyValuePair<string, double> pair in playerScores)
@@ -1137,6 +1154,11 @@ namespace ICS3UFinalProjectBreakout
             buttonPress.Stop();
             buttonPress.Play();
         }
+        /// <summary>
+        /// Only allows letters to be entered
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nameplayer_TextChanged(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
@@ -1145,6 +1167,11 @@ namespace ICS3UFinalProjectBreakout
             }
                
         }
+        /// <summary>
+        /// Goes back to the start screen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void backtomenu_Click(object sender, EventArgs e)
         {
             gameState = "Start";

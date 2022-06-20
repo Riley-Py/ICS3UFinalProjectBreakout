@@ -35,7 +35,7 @@
             // 
             // gameTimer
             // 
-            this.gameTimer.Interval = 60;
+            this.gameTimer.Interval = 50;
             this.gameTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Breakout

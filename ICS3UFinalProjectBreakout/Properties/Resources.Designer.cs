@@ -61,12 +61,42 @@ namespace ICS3UFinalProjectBreakout.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] beginningMusic {
+            get {
+                object obj = ResourceManager.GetObject("beginningMusic", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap breakout_title {
             get {
                 object obj = ResourceManager.GetObject("breakout_title", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] buttonPress {
+            get {
+                object obj = ResourceManager.GetObject("buttonPress", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] collisionSound {
+            get {
+                object obj = ResourceManager.GetObject("collisionSound", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -81,11 +111,60 @@ namespace ICS3UFinalProjectBreakout.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] gameMusic {
+            get {
+                object obj = ResourceManager.GetObject("gameMusic", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] gameOver {
+            get {
+                object obj = ResourceManager.GetObject("gameOver", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Heart {
             get {
                 object obj = ResourceManager.GetObject("Heart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap retry {
+            get {
+                object obj = ResourceManager.GetObject("retry", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string scores {
+            get {
+                return ResourceManager.GetString("scores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap timer {
+            get {
+                object obj = ResourceManager.GetObject("timer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
